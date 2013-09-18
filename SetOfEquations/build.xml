@@ -1,0 +1,6 @@
+<project name="SetOfEquations" default="compile" >
+    <target name="compile">
+        <javac srcdir="./src" destdir="./build">
+        </javac>
+    </target>
+</project>

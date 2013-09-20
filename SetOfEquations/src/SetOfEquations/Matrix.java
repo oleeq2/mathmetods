@@ -89,4 +89,16 @@ public class Matrix{
         return sums[ret];
     }
 //  public int getThirdNorm()
+
+    public String toString()
+    {
+        StringBuilder builder = new StringBuilder();
+        for(int[] line : data)
+        {
+            for(int i : line)
+                builder.append(i);
+            builder.append('\n');
+        }       
+        return builder.toString();
+    }
 }

@@ -26,14 +26,16 @@ public class Main
             System.out.println("Неверно задана точность");
             return;
         }
-        
+
         Matrix A = getMatrixFromFile(args[1]);
         Matrix B = getMatrixFromFile(args[2]);
-        
+
+
         Solver mySolver = new Solver();
         Matrix X = mySolver.Solve(A,B,precision);
 
-       }
+        System.out.println(X.toString());
+    }
 
     static Matrix getMatrixFromFile(String filePath)
     {
@@ -51,17 +53,17 @@ public class Main
         int n,m;
         try
         {
-           String[] dimension = reader.readLine().split("x");
-           n = Integer.parseInt(dimension[0]);
-           m = Integer.parseInt(dimension[1]);
+            String[] dimension = reader.readLine().split("x");
+            n = Integer.parseInt(dimension[0]);
+            m = Integer.parseInt(dimension[1]);
         }
         catch(Exception ex)
         {
             return null;
         }
-        
 
-        int [][] data = new int[n][m];
+
+        double [][] data = new double[n][m];
         int i = 0;
 
         String read = null;
@@ -80,10 +82,6 @@ public class Main
                 }
                 for(String num : nums)
                     data[i][j++] = Integer.parseInt(num);
-
-                for(int c : data[i])
-                    System.out.print(c + " ");
-                System.out.println();
             }
             catch(Exception ex)
             {
@@ -94,13 +92,14 @@ public class Main
         }while(read != null);
 
         try{
-        reader.close(); 
+            reader.close(); 
         }
         catch(IOException ex)
         {
             System.out.println("Ошибка закрытия файла");
         }
-        
-        return new Matrix(data);
+
+        Matrix ret = new Matrix(data);
+        return ret;
     }
 } 

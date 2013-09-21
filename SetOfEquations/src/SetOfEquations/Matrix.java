@@ -1,30 +1,30 @@
 package SetOfEquations;
 import java.lang.RuntimeException;
 public class Matrix{
-    int [][] data;
-    int m,n;
+    double [][] data;
+    int lines,columns;
 
-    public Matrix(int [][] MyMatrix){
-        data = (int[][]) MyMatrix.clone();
-        m = data.length;
-        n = data[0].length;
-    }
+    public Matrix(double [][] MyMatrix){
+        data = (double[][]) MyMatrix.clone(); 
+        lines = data.length;
+        columns = data[0].length;
+   }
 
-    public void changeValues(int [][] new_data){
-        data = (int[][]) new_data.clone();
+    public void changeValues(double [][] new_data){
+        data = (double[][]) new_data.clone();
     }
     
     public void changeValues(int i,int j,int val){
         data[i][j] = val;
     }
 
-    public int[][] getValues(){
-        return (int[][]) data.clone();
+    public double[][] getValues(){
+        return (double[][]) data.clone();
     }
     public int[] getDimension(){
         int[] ret = new int[2];
-        ret[0] = m;
-        ret[1] = n;
+        ret[0] = lines;
+        ret[1] = columns;
         return ret;
     }
 
@@ -37,9 +37,9 @@ public class Matrix{
             throw new RuntimeException();
 
 
-        int [][] arrayC = new int[lines][columns];
-        int [][] arrayA = A.getValues();
-        int [][] arrayB = B.getValues();
+        double [][] arrayC = new double[lines][columns];
+        double [][] arrayA = A.getValues();
+        double [][] arrayB = B.getValues();
 
         int i,j;
 
@@ -56,47 +56,55 @@ public class Matrix{
     }
 
     public static Matrix Add(Matrix A,Matrix B){
-        int[] dimension = A.getDimension();
-        int[][] arrayC = new int[dimension[0]][dimension[1]];
-        int[][] arrayA = A.getValues();
-        int[][] arrayB = B.getValues();
+        int[] Adim = A.getDimension();
+        int[] Bdim = B.getDimension();
+        if( Adim[0] != Bdim[0] || Adim[1] != Bdim[1])
+        {
+            return null;
+        }
+        double[][] arrayC = new double[Adim[0]][Adim[1]];
+        double[][] arrayA = A.getValues();
+        double[][] arrayB = B.getValues();
         int i,j;
-        for(i=0;i<arrayA.length;i++)
-            for(j=0;j<arrayB.length;j++)
+
+        for(i=0;i<Adim[0];i++)
+            for(j=0;j<Adim[1];j++)
                 arrayC[i][j] = arrayA[i][j] + arrayB[i][j];
         return new Matrix(arrayC); 
     }
 
 //  public int getFirstNorm()
-    public int getSecondNorm()
+    public double getSecondNorm()
     {
-        int [] sums = new int[n];
+        double [] sums = new double[lines];
         int i,j;
-        for(i = 0; i < n; i++)
-            for(j = 0; j < m;j++)
+        for(i = 0; i < lines; i++)
+            for(j = 0; j < columns;j++)
                 sums[i] += Math.abs(data[i][j]);
         int ret; 
-        if(sums[0] > sums[1])
-            if(sums[0] > sums[2])
-                ret = 0;
-            else 
-                ret = 2;
-        else
-            if(sums[1] > sums[2])
-                ret = 1;
-            else
-                ret = 2;
-        return sums[ret];
+
+        return getMax(sums);
     }
 //  public int getThirdNorm()
 
+    double getMax(double[] data)
+    {
+        double max = data[0];
+        int i;
+        for(i=0;i<lines;i++)
+        {
+            if(i > max)
+                max = i;
+        }
+        return max;
+    } 
     public String toString()
     {
         StringBuilder builder = new StringBuilder();
-        for(int[] line : data)
+        for(double[] line : data)
         {
-            for(int i : line)
-                builder.append(i);
+            for(double i : line)
+                builder.append(i + " ");
             builder.append('\n');
         }       
         return builder.toString();

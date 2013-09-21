@@ -6,15 +6,16 @@ public class Solver
     {
        Matrix X = new Matrix(B.getValues());
        Matrix Current;
-       int prevNorm;
-       int currentNorm;
+       double prevNorm;
+       double currentNorm;
+
        do
        {
            Matrix FactorMatrix = getFactorMatrix(A);
            Matrix FreeFactorMatrix = getFreeFactorMatrix(A,B);
 
            if(FactorMatrix.getSecondNorm() > 1)
-               throw new RuntimeException();
+              throw new RuntimeException();
 
            Current = Matrix.Multiply(FactorMatrix,X);
            Current = Matrix.Add(Current,FreeFactorMatrix);
@@ -23,20 +24,22 @@ public class Solver
            currentNorm = Current.getSecondNorm();
 
            X = Current;
-       }while( currentNorm-prevNorm > precision);
+
+       }while( Math.abs(currentNorm-prevNorm) > precision);
        return X;
     }
 
     Matrix getFactorMatrix(Matrix A)
     {
-        int [][] factorArray = A.getValues();
+        double [][] factorArray = A.getValues();
         int[] dim = A.getDimension();
         int i;
         
+
         for(i = 0; i < dim[0]; i++)
         {
             int j;
-            int element = factorArray[i][i];
+            double element = factorArray[i][i];
             for(j = 0; j < dim[1]; j++)
             {
                 if(j == i)
@@ -49,17 +52,17 @@ public class Solver
         return new Matrix(factorArray);
     }
 
-    Matrix getFreeFactorMatrix(Matrix B,Matrix A)
+    Matrix getFreeFactorMatrix(Matrix A,Matrix B)
     {
-        int [][] dataB = B.getValues();
-        int [][] dataA = A.getValues();
-        int [] dim = B.getDimension();
+        double [][] dataB = B.getValues();
+        double [][] dataA = A.getValues();
+        int[] dim = B.getDimension();
 
         int i;
 
         for(i = 0; i < dim[0]; i++)
         {
-            int element = dataA[i][i];
+            double element = dataA[i][i];
             int j;
             for(j = 0; j < dim[1]; j++)
                 dataB[i][j] /= element;

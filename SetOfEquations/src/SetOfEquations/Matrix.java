@@ -19,7 +19,12 @@ public class Matrix{
     }
 
     public double[][] getValues(){
-        return (double[][]) data.clone();
+        double[][] ret = new double[lines][columns];
+        int i,j;
+        for(i=0;i<lines;i++)
+            for(j=0;j<columns;j++)
+                ret[i][j] = data[i][j];
+        return ret;
     }
     public int[] getDimension(){
         int[] ret = new int[2];
@@ -30,10 +35,15 @@ public class Matrix{
 
     public static Matrix Multiply(Matrix A,Matrix B){
         int lines,columns;
-        lines = A.getDimension()[0];
-        columns = B.getDimension()[1];
+        int[] dimA,dimB;
 
-        if(lines != columns)
+        dimA = A.getDimension();
+        dimB = B.getDimension();
+
+        lines = dimA[0];
+        columns = dimB[1];
+
+        if(dimA[1] != dimB[0])
             throw new RuntimeException();
 
 
@@ -44,12 +54,15 @@ public class Matrix{
         int i,j;
 
         for(i = 0; i < lines;i++)
-            for(j = 0; j < lines; j++)
+            for(j = 0; j < columns; j++)
             {
                 int sum=0;
                 int index;
                 for(index = 0; index < lines;index++)
+                {
                     sum += arrayA[i][index]*arrayB[index][j];
+                }
+                arrayC[i][j] = sum;
             }
 
         return new Matrix(arrayC);
@@ -74,18 +87,19 @@ public class Matrix{
     }
 
 //  public int getFirstNorm()
+//  public int getThirdNorm()
     public double getSecondNorm()
     {
         double [] sums = new double[lines];
         int i,j;
         for(i = 0; i < lines; i++)
+        {
+            sums[i] = 0;
             for(j = 0; j < columns;j++)
                 sums[i] += Math.abs(data[i][j]);
-        int ret; 
-
+        }
         return getMax(sums);
     }
-//  public int getThirdNorm()
 
     double getMax(double[] data)
     {
@@ -93,11 +107,18 @@ public class Matrix{
         int i;
         for(i=0;i<lines;i++)
         {
-            if(i > max)
-                max = i;
+            if(data[i] > max)
+                max = data[i];
         }
         return max;
     } 
+    public void swapString(int index,int second_index)
+    {
+        double [] line = data[index].clone();
+        data[index] = data[second_index].clone();
+        data[second_index] = line.clone();
+        return;
+    }
     public String toString()
     {
         StringBuilder builder = new StringBuilder();

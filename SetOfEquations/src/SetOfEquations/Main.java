@@ -30,6 +30,8 @@ public class Main
         Matrix A = getMatrixFromFile(args[1]);
         Matrix B = getMatrixFromFile(args[2]);
 
+        if(A == null && B == null)
+            return;
 
         Solver mySolver = new Solver();
         Matrix X = mySolver.Solve(A,B,precision);
@@ -51,17 +53,17 @@ public class Main
         }
 
         int n,m;
-        try
-        {
-            String[] dimension = reader.readLine().split("x");
+        try{
+            String str = reader.readLine();
+            String[] dimension = str.split("x");
             n = Integer.parseInt(dimension[0]);
             m = Integer.parseInt(dimension[1]);
         }
         catch(Exception ex)
         {
+            System.out.println("Ошибка чтения");
             return null;
         }
-
 
         double [][] data = new double[n][m];
         int i = 0;

@@ -8,6 +8,7 @@ public class Solver
        Matrix Current;
        double prevNorm;
        double currentNorm;
+       int iter = 0;
 
        do
        {
@@ -15,8 +16,7 @@ public class Solver
            Matrix FreeFactorMatrix = getFreeFactorMatrix(A,B);
 
            if(FactorMatrix.getSecondNorm() > 1)
-              throw new RuntimeException();
-
+               throw new RuntimeException();
            Current = Matrix.Multiply(FactorMatrix,X);
            Current = Matrix.Add(Current,FreeFactorMatrix);
 
@@ -24,17 +24,17 @@ public class Solver
            currentNorm = Current.getSecondNorm();
 
            X = Current;
+           iter++;
 
-       }while( Math.abs(currentNorm-prevNorm) > precision);
+       }while(Math.abs(currentNorm-prevNorm) > precision);
        return X;
     }
 
     Matrix getFactorMatrix(Matrix A)
     {
-        double [][] factorArray = A.getValues();
+        double[][] factorArray = A.getValues();
         int[] dim = A.getDimension();
         int i;
-        
 
         for(i = 0; i < dim[0]; i++)
         {
@@ -57,7 +57,6 @@ public class Solver
         double [][] dataB = B.getValues();
         double [][] dataA = A.getValues();
         int[] dim = B.getDimension();
-
         int i;
 
         for(i = 0; i < dim[0]; i++)

@@ -1,6 +1,9 @@
-<project name="SetOfEquations" default="compile" >
+<project name="SetOfEquations" default="debug" >
     <target name="compile">
         <javac srcdir="./src" destdir="./build">
         </javac>
+    </target>
+    <target name="debug" >
+        <javac srcdir="./src" destdir="./build" debug="true" />
     </target>
 </project>

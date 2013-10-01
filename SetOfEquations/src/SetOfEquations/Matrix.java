@@ -56,7 +56,7 @@ public class Matrix{
         for(i = 0; i < lines;i++)
             for(j = 0; j < columns; j++)
             {
-                int sum=0;
+                double sum=0;
                 int index;
                 for(index = 0; index < lines;index++)
                 {

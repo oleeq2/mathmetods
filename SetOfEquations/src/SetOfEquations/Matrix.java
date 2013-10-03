@@ -33,6 +33,19 @@ public class Matrix{
         return ret;
     }
 
+    public static Matrix Multiply(Matrix A,double num)
+    {
+        int []dim = A.getDimension();
+        double [][] arrayA = A.getValues();
+        double [][] arrayB = new double[dim[0]][dim[1]];
+
+        int i,j;
+        for(i=0;i<dim[0];i++)
+            for(j=0;j<dim[1];j++)
+                arrayB[i][j] = num*arrayA[i][j];
+        return new Matrix(arrayB);
+    }
+
     public static Matrix Multiply(Matrix A,Matrix B){
         int lines,columns;
         int[] dimA,dimB;
@@ -42,11 +55,8 @@ public class Matrix{
 
         lines = dimA[0];
         columns = dimB[1];
-
         if(dimA[1] != dimB[0])
             throw new RuntimeException();
-
-
         double [][] arrayC = new double[lines][columns];
         double [][] arrayA = A.getValues();
         double [][] arrayB = B.getValues();
@@ -68,6 +78,10 @@ public class Matrix{
         return new Matrix(arrayC);
     }
 
+    public static Matrix Substraction(Matrix A,Matrix B)
+    {
+        return Matrix.Add(A,Multiply(B,-1));
+    }
     public static Matrix Add(Matrix A,Matrix B){
         int[] Adim = A.getDimension();
         int[] Bdim = B.getDimension();
@@ -111,13 +125,6 @@ public class Matrix{
                 max = data[i];
         }
         return max;
-    } 
-    public void swapString(int index,int second_index)
-    {
-        double [] line = data[index].clone();
-        data[index] = data[second_index].clone();
-        data[second_index] = line.clone();
-        return;
     }
     public String toString()
     {

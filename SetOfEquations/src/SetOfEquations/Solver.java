@@ -8,7 +8,6 @@ public class Solver
        Matrix Current;
        double prevNorm;
        double currentNorm;
-       int iter = 0;
 
        do
        {
@@ -24,7 +23,6 @@ public class Solver
            currentNorm = Current.getSecondNorm();
 
            X = Current;
-           iter++;
 
        }while(Math.abs(currentNorm-prevNorm) > precision);
        return X;

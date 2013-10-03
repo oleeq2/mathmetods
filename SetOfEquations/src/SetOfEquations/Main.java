@@ -35,8 +35,20 @@ public class Main
 
         Solver mySolver = new Solver();
         Matrix X = mySolver.Solve(A,B,precision);
+        Matrix Discrepancy = getDiscrepancy(A,B,X);
 
-        System.out.println(X.toString());
+        System.out.println(X.toString()+"\n");
+        System.out.println(Discrepancy.toString());
+
+    }
+
+    static Matrix getDiscrepancy(Matrix A,Matrix B,Matrix X)
+    {
+        Matrix ret = null;
+
+        ret = Matrix.Substraction(B,Matrix.Multiply(A,X));
+
+        return ret;
     }
 
     static Matrix getMatrixFromFile(String filePath)

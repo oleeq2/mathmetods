@@ -14,8 +14,7 @@ public class Main
         {
             System.out.println("Слишком мало аргументов!");
             return;
-        } 
-
+        }
         double precision; 
         try
         {
@@ -34,7 +33,16 @@ public class Main
             return;
 
         Solver mySolver = new Solver();
-        Matrix X = mySolver.Solve(A,B,precision);
+        Matrix X;
+        try
+        {
+            X = mySolver.Solve(A,B,precision);
+        }
+        catch(RuntimeException ex)
+        {
+            System.out.println("Матрица без диагонального преобладания");
+            return;
+        }
         Matrix Discrepancy = getDiscrepancy(A,B,X);
 
         System.out.println(X.toString()+"\n");

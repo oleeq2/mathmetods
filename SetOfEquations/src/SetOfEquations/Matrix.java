@@ -10,13 +10,13 @@ public class Matrix{
         columns = data[0].length;
    }
 
-    public void changeValues(double [][] new_data){
+  /*  public void changeValues(double [][] new_data){
         data = (double[][]) new_data.clone();
     }
     
     public void changeValues(int i,int j,int val){
         data[i][j] = val;
-    }
+    }   */
 
     public double[][] getValues(){
         double[][] ret = new double[lines][columns];
